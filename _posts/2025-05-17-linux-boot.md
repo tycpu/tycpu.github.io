@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Analyzing start_kernel() in Linux Kernel"
-date:   2025-05-17 12:00:00 +0900
+date:   2025-05-17 11:00:00 +0900
 tags: [linux, kernel, boot]
 ---
 
@@ -16,6 +16,7 @@ It initializes critical subsystems such as:
 - and finally starts the first user-space process.
 
 Here’s the definition:
+
 ```c
 asmlinkage __visible void __init start_kernel(void)
 {
