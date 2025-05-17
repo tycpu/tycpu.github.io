@@ -1,7 +1,7 @@
 ---
 layout: post
-title:  "Analyzing start_kernel() in Linux Kernel"
-date:   2025-05-17 11:00:00 +0900
+title: "Analyzing start_kernel() in Linux Kernel"
+date: 2025-05-17 11:00:00 +0900
 tags: [linux, kernel, boot]
 ---
 
@@ -22,3 +22,4 @@ asmlinkage __visible void __init start_kernel(void)
 {
     // Kernel startup logic...
 }
+```
