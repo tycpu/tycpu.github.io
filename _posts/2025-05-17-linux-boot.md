@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Analyzing start_kernel() in Linux Kernel"
-date:   2025-05-18 12:00:00 +0900
+date:   2025-05-17 12:00:00 +0900
 tags: [linux, kernel, boot]
 ---
 
