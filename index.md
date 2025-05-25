@@ -5,9 +5,18 @@ title: Linux Kernel Boot Series
 
 # 🧠 Linux Kernel Boot Series (for ARM64 SoC)
 
-This blog documents my learning journey as a CPU software engineer  
-working on Linux kernel and low-level boot internals for ARM64-based SoCs.  
-The series is organized by boot stages and exception levels.
+I'm a CPU Software Engineer at **Samsung Electronics (Exynos team)**  
+working on Linux kernel internals, particularly **ARM64 architecture, scheduler**, and **CPU frequency drivers**.
+
+This blog documents my technical journey through the Linux kernel boot process —  
+from the very first power-on reset to the start of the `start_kernel()` function.
+
+All content is written in English to improve my global communication skills  
+and prepare for future opportunities in international tech environments.
+
+- 🔧 Focus: Linux kernel boot, TF-A, U-Boot, ARM64
+- ✍️ Language: English (for technical writing & interviews)
+- 📫 Contact: [pty4437@gmail.com](mailto:pty4437@gmail.com)
 
 ---
 
