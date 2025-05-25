@@ -1,4 +1,15 @@
 title: Tycpu's Kernel Blog
-author: tycpu
-description: Notes on Linux kernel and ARM64 boot process
+author: Tycpu
+email: pty4437@gmail.com
+description: Notes on Linux kernel boot process (ARM64 / TF-A / Exynos)
+baseurl: ""
+url: "https://tycpu.github.io"
+
 theme: minima
+
+# 추가: social
+social_links:
+  - platform: email
+    user_url: mailto:pty4437@gmail.com
+  - platform: linkedin
+    user_url: https://www.linkedin.com/in/%ED%83%9C%EC%9C%A4-%EB%B0%95-522aaa32a/
