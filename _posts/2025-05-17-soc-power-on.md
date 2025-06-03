@@ -7,7 +7,7 @@ tags: [boot, arm64, soc, por]
 
 ## 🧱 Power-On Reset and the Boot ROM
 
-![Boot Flow Diagram](/assets/images/1-1.png)
+![Boot Flow Diagram](../assets/1-1.png)
 
 ### 🔌 Power-On Reset (POR)
 
