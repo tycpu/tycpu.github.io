@@ -18,7 +18,7 @@ So, we have to know about the role of each exception layer.
 | EL3 | Make up security with TrustZone and initialize |
 | EL1 / EL2 | Execute OS like Linux |
 
-EL3 gives control to EL1 / EL2 when the following conditions are met:
+EL3 gives control to EL1 or EL2(depending on platform configuration) when the following conditions are met:
 
 | Condition | Description |
 |-----------|-------------|
@@ -31,7 +31,8 @@ EL3 gives control to EL1 / EL2 when the following conditions are met:
 
 ## 🔧 The minimal setting for transition
 
-When EL3 has to give control to EL1 / EL2, three registers must be set:
+When EL3 has to give control to EL1 or EL2,  
+three registers must be set(SP for target EL should also be prepared.):
 
 | Register | Purpose |
 |----------|---------|
@@ -60,7 +61,7 @@ When EL3 has to give control to EL1 / EL2, three registers must be set:
 ## 🚀 ERET: Not just a return
 
 `ERET` is not just an instruction for PC return.  
-It is a powerful instruction for transitioning between Exception Levels and restoring context.
+It is an instruction for transitioning between Exception Levels and restoring context with set registers.
 
 | Step | Description |
 |------|-------------|
