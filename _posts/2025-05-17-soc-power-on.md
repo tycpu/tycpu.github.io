@@ -12,7 +12,8 @@ tags: [boot, arm64, soc, por]
 ### 🔌 Power-On Reset (POR)
 
 Suppose that there is a SoC which would get some power from PMIC.  
-If SoC gets power, a particular circuit will be operated for reset.  
+If SoC gets power, it will be initalized with reset state.  
+So, a particular hardware circuit would maintain reset and quit it when the initializing is done.  
 The name of circuit is **Power-On Reset (POR).**
 
 ***
@@ -20,8 +21,9 @@ The name of circuit is **Power-On Reset (POR).**
 ### ⬇️ Reset Pin Behavior
 
 If SoC starts to get some power, the **reset pin** would be **low (active)** state.  
-Reset pin is some kind of signal, and if the state of reset pin changes to high,  
-CPU jumps to **reset vector** immediately.  
+Reset pin is a hardware signal line that controls whether the SoC is in reset state or not.
+And if the reset pin changes to high state,  
+CPU jumps to **reset vector** immediately.(reset vector is the first PC address)  
 Reset vector has the starting address of **boot ROM code**.
 
 ***
@@ -37,13 +39,14 @@ To explain POR circuit simply, this circuit **waits for stable operating conditi
 
 For example:
 
-- POR circuit waits for reset of all previously written registers.
-- It also waits for **clock stabilization**.
+- POR circuit ensures that registers are properly initialized before releasing reset.  
+- POR circuit waits for initializing internal logic like **clock stabilization**.
 
-SoC operation starts with **XTAL**, which is a low but stable clock oscillator.  
+SoC operation starts with an external **XTAL** clock before PLL is locked.(XTAL is a low but stable clock oscillator)  
 POR waits until **lock in PLL (Phase-Locked Loop)**.  
 PLL is a kind of **frequency multiplier**.  
 This will be locked after stabilization.  
+(this lock is different with software lock. it means the phase and frequency are synchronized and stable.)  
 So in order to operate normally, POR checks the **lock signal from PLL**.
 
 ***
