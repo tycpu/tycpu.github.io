@@ -19,13 +19,14 @@ EL3 is the highest permission level which is imported from ARMv8-A.
 | EL2             | Hypervisor level for virtualization    |
 | EL3             | Secure monitor level for world control |
 
-EL3 manages secure world because only EL3 can access to secure world.  
+EL3 manages secure world because **only EL3 can access secure world.**  
+**(Secure world means not only memory area. It means memory area + execution context + permission model...)**  
 And for that reason, EL3 divides the area between secure world and non-secure world.  
 Other Exception Levels like EL1 and EL2 can access to non-secure world only.
 
 The main reason why only EL3 can access to secure world is for TrustZone.  
-If all exception levels can access secure world, there must be happened critical security problems.  
-And SoC can't be operated because of hacking or bug.  
+If all exception levels can access secure world, there might be happened critical security problems.  
+And then SoC can't be operated because of hacking or bug.  
 So accessing to secure world is really risky, but something has to controll and initialize for operating SoC.  
 For that reason, **only EL3** can access to secure world like PSCI or SMC.
 
@@ -52,11 +53,11 @@ And BL31 initializes EL3.
 
 EL3 is important, so someone says "Faster is better. So EL3 would be operated on BL1 or BL2"  
 But this is not right.  
-For executing EL3, there are a few things it needs before.
+For executing EL3, there are a few things that EL3 needs before.
 
 | Requirement       | Reason                                                       |
 |-------------------|--------------------------------------------------------------|
-| DRAM              | EL3 is big, needs to be loaded on DRAM                       |
+| DRAM              | EL3 needs to be loaded on DRAM(code size, with OP-TEE, etc.) |
 | Secure regions    | Secure/non-secure world also loaded on DRAM                  |
 | Device tree       | Loaded from BL2                                              |
 | PSCI & SMC        | Handler setup possible only after above                      |
@@ -65,7 +66,7 @@ So we can know the reason why EL3 is executed on BL31.
 These are all possible **after BL2**.
 
 Additionally, EL3 is not only for booting. It is also needed during system runtime.  
-For example, PSCI and system reset are located in secure world and accessed through SMC.  
+For example, PSCI and system reset are handled in EL3 secure firmware and triggered via SMC from non-secure world.  
 This interface requires EL3.  
 BL31 runs in a stable, pre-initialized environment (after BL1 / BL2).  
 So for calling SMC interface, **EL3 must be operated on BL31**.
@@ -118,5 +119,5 @@ Therefore, PSCI and SMC both represent the interface between secure and non-secu
 
 
 We can summarize EL3 flow for booting like this:
-![EL3 Boot Flow](../assets/el3.png)
+![EL3 Boot Flow](/assets/el3.png)
 ---
