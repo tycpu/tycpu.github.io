@@ -39,7 +39,7 @@ and prepare for future opportunities in international tech environments.
 
 ## 🚀 3. Entering the Linux Kernel
 
-- [U-Boot: Bootloader Duties](/2025/05/24/u-boot.html)
+- [Bootloader Overview](/2025/05/24/bootloader.html)
 - [Entering the Linux Kernel: `head.S`](/2025/05/25/heads.html)
 - [The Handoff: `bl start_kernel`](/2025/05/26/start-kernel.html)
 
