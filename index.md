@@ -14,7 +14,7 @@ from the very first power-on reset to the start of the `start_kernel()` function
 All content is written in English to improve my global communication skills  
 and prepare for future opportunities in international tech environments.
 
-- 🔧 Focus: Linux kernel boot, TF-A, U-Boot, ARM64
+- 🔧 Focus: Linux kernel boot, TF-A, Bootloader, ARM64
 - ✍️ Language: English (for technical writing & interviews)
 - 📫 Contact: [pty4437@gmail.com](mailto:pty4437@gmail.com)
 
