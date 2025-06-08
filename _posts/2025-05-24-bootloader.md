@@ -20,7 +20,7 @@ The bootloader's role is simple but critical:
 
 ### 1️⃣ What Is a Bootloader?
 
-We previously discussed **secure boot** in [Post 2-1](./2025-05-20-stages-bl1-bl2-bl31),  
+We previously discussed **secure boot** in [Post 2-1](./2025-05-20-stages-bl1-bl2-bl31.html),  
 which focused on the **secure world** and its initialization steps.
 
 Now, we shift to the **non-secure world** and explore how the Linux kernel is booted.  
