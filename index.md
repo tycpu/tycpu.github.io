@@ -3,7 +3,7 @@ layout: home
 title: Linux Kernel
 ---
 
-# 🧠 Linux Kernel Boot Series (for ARM64 SoC)
+# 🧠 Linux Kernel Series (for ARM64 SoC)
 
 I'm a CPU Software Engineer at **Samsung Electronics (Exynos team)**  
 working on Linux kernel internals, particularly **ARM64 architecture, scheduler**, and **CPU frequency drivers**.
