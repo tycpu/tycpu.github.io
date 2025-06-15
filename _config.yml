@@ -29,7 +29,9 @@ defaults:
 sass:
   style: compressed
 
-# Add this line to load custom stylesheet
-minima:
-  include_css: ["custom-styles"]
+defaults:
+  - scope:
+      path: "assets"
+    values:
+      layout: null
 
