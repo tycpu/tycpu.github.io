@@ -13,3 +13,16 @@ social_links:
     user_url: mailto:pty4437@gmail.com
   - platform: linkedin
     user_url: https://www.linkedin.com/in/%ED%83%9C%EC%9C%A4-%EB%B0%95-522aaa32a/
+
+# _pages 폴더를 정적 페이지로 인식시키기 위해 필요
+include:
+  - _pages
+
+defaults:
+  - scope:
+      path: "_pages"
+      type: "pages"
+    values:
+      layout: default
+      permalink: "/:basename/"
+
