@@ -1,7 +1,10 @@
 // 줄어든 포스트 목록 스타일
 .post-list {
-  font-size: 0.85rem;
-  margin-top: 2rem;
+  //font-size: 0.85rem;
+  //margin-top: 2rem;
+  font-size: 1.8rem;
+  color: red;
+  border: 2px dashed blue;
 
   .post-link {
     font-weight: normal;
