@@ -26,3 +26,10 @@ defaults:
       layout: default
       permalink: "/:basename/"
 
+sass:
+  style: compressed
+
+# Add this line to load custom stylesheet
+minima:
+  include_css: ["custom-styles"]
+

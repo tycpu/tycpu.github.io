@@ -1,6 +1,6 @@
 ---
 layout: home
-title: Linux Kernel Boot Series
+title: Linux Kernel
 ---
 
 # 🧠 Linux Kernel Boot Series (for ARM64 SoC)
@@ -8,8 +8,7 @@ title: Linux Kernel Boot Series
 I'm a CPU Software Engineer at **Samsung Electronics (Exynos team)**  
 working on Linux kernel internals, particularly **ARM64 architecture, scheduler**, and **CPU frequency drivers**.
 
-This blog documents my technical journey through the Linux kernel boot process —  
-from the very first power-on reset to the start of the `start_kernel()` function.
+This blog documents my technical journey through the Linux kernel.
 
 All content is written in English to improve my global communication skills  
 and prepare for future opportunities in international tech environments.
@@ -22,7 +21,12 @@ and prepare for future opportunities in international tech environments.
 
 # 📚 Technical Series
 
-- [Linux Kernel Boot Series](/boot-series/)
+- [1️⃣ Boot to Life: Understanding Linux Kernel Boot](/boot-series/)
+- [2️⃣ Surviving Panic: Debugging Kernel Crashes & Call Traces](/debug-series/)
+- [3️⃣ Device Tree & Driver Binding: When the Hardware Disappears](/bringup-series/)
+- [4️⃣ Trace Everything: Kernel Tracing Tools for Performance Debugging](/trace-series/)
+- [5️⃣ DVFS in Practice: cpufreq driver & governor Design](/cpufreq-series/)
+- [6️⃣ Task Scheduling & CPU Affinity: How the Kernel Thinks](/scheduler-series/)
 
 
 ## 📌 Notes
