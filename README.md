@@ -16,30 +16,36 @@ I’m organizing it by topics so readers can follow along.
 - ✅ Blog setup with GitHub Pages + minima
 - ✅ Setting up a kernel dev environment for ARM64
 
-### 🧠 1. Boot Process
-- [How Linux boots on ARM64: from reset to `start_kernel()`](#)
-- [Understanding `setup_arch()` and early MMU setup](#)
-- [ARM64 memory layout and paging](#)
-- [Device Tree explained](#)
+### 🧠 1. Boot to Life: Understanding Linux Kernel Boot
+- [From Reset to Boot ROM: The First Instructions in an SoC](#)
+- [TF-A and EL3: Secure World Initialization Explained](#)
+- [Bootloader to Kernel: Setting Up for `head.S`](#)
+- [Diving into `head.S`: The Final Step to `start_kernel()`](#)
 
-### 🧵 2. CPU Bring-up & SMP
-- [CPU bring-up and `secondary_start_kernel()`](#)
-- [PSCI and CPU hotplug](#)
+### 💥 2. Surviving Panic: Debugging Kernel Crashes & Call Traces
+- [Understanding kernel panic, Oops, and BUG()](#)
+- [Call trace decoding: PC, LR, and symbol offset](#)
+- [How to get early logs with `earlycon` and `printk`](#)
 
-### ⚙️ 3. Scheduler
-- [CFS scheduler explained](#)
-- [What are `sched_domain` and `cpu_topology`](#)
-- [Energy Aware Scheduling (EAS)](#)
+### 🔌 3. Device Tree & Driver Binding: When the Hardware Disappears
+- [Anatomy of a devicetree: compatible, reg, interrupts](#)
+- [How `of_match_table` links to `probe()`](#)
+- [initcall levels and debugging missing devices](#)
 
-### 🔋 4. cpufreq & Power Management
-- [Writing a cpufreq driver](#)
-- [Understanding OPP tables](#)
-- [Thermal framework integration](#)
+### 📊 4. Trace Everything: Kernel Tracing Tools for Performance Debugging
+- [Using `ftrace` and `trace-cmd` effectively](#)
+- [Visualizing task behavior with `kernelshark`](#)
+- [Profiling CPU usage with `perf`](#)
 
-### 🔧 5. Debugging Tools & Practices
-- [Using ftrace and trace-cmd](#)
-- [Reading `sched_debug`](#)
-- [Analyzing kernel logs and boot output](#)
+### 🔋 5. DVFS in Practice: cpufreq driver & governor Design
+- [How cpufreq drivers work: `target_index()` and policies](#)
+- [Writing a schedutil-style governor: `get_util()` and boost](#)
+- [Thermal & OPP integration with cpufreq](#)
+
+### ⚙️ 6. Task Scheduling & CPU Affinity: How the Kernel Thinks
+- [CFS: how tasks are picked and run](#)
+- [CPU topology, `sched_domain`, and affinity](#)
+- [Energy Aware Scheduling: balancing performance and power](#)
 
 ---
 
