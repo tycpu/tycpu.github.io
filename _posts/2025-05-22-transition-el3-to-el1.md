@@ -7,36 +7,39 @@ tags: [el3, el2, el1, tf-a, context-switch]
 
 ## 🔁 Transition from EL3 to EL2/EL1
 
+---
 ### 🧭 The last role of EL3: When, and why this layer is transferred
+---
 
-EL3 is really important for security and stable initialization.  
-But it doesn't provide general execution environment like OS and hypervisor.  
+EL3 is really important for **security and stable initialization.**  
+But <span class="highlight">**it doesn't provide general execution environment like OS and hypervisor.**</span>  
 So, we have to know about the role of each exception layer.
 
 | Exception Level | Role |
 |------------------|------|
 | EL3 | Make up security with TrustZone and initialize |
-| EL1 / EL2 | Execute OS like Linux |
+| EL1 / EL2 | Execute OS   i.e) Linux |
 
 EL3 gives control to EL1 or EL2(depending on platform configuration) when the following conditions are met:
 
-| Condition | Description |
-|-----------|-------------|
-| 1 | SoC is initialized stably → can use DRAM, MMU, cache |
-| 2 | Secure / Non-secure world are divided → GIC, MMU setting completed |
-| 3 | OS / Bootloader is ready to execute → BL33 loaded |
-| 4 | Registers like `SPSR_EL3`, `ELR_EL3` are ready |
+<span style="color:blue">1) </span>**SoC is initialized stably** → can use DRAM, MMU, cache  
+<span style="color:blue">2) </span>**Secure / Non-secure world are divided** → GIC, MMU setting completed  
+<span style="color:blue">3) </span>**OS / Bootloader is ready to execute** → BL33 loaded  
+<span style="color:blue">4) </span>**Registers like `SPSR_EL3`, `ELR_EL3` are ready**  
+
+
+<div style="margin:40px 0;"></div>
 
 ---
-
 ## 🔧 The minimal setting for transition
+---
 
 When EL3 has to give control to EL1 or EL2,  
 three registers must be set(SP for target EL should also be prepared.):
 
 | Register | Purpose |
 |----------|---------|
-| `SCR_EL3` | Secure → Non-secure state, instruction set |
+| `SCR_EL3` | for Secure → Non-secure state + instruction set architecture |
 | `SPSR_EL3` | Next EL’s CPU mode, interrupt state, stack pointer behavior |
 | `ELR_EL3` | Target address for control transfer |
 
@@ -56,21 +59,31 @@ three registers must be set(SP for target EL should also be prepared.):
 | D/A/I/F | Debug, SError, IRQ, FIQ disable flags (1 = disable) |
 | SP | Selects SP_ELx or SP_EL0 (based on mode) |
 
+
+<div style="margin:40px 0;"></div>
+
+---
+## 🚀 ERET: Not just a return
 ---
 
-## 🚀 ERET: Not just a return
-
 `ERET` is not just an instruction for PC return.  
-It is an instruction for transitioning between Exception Levels and restoring context with set registers.
+It is an instruction for **transitioning between Exception Levels** and **restoring context with set registers.**
 
 | Step | Description |
 |------|-------------|
-| 1 | Jump to address in `ELR_EL3` |
-| 2 | Restore CPU state from `SPSR_EL3` |
-| 3 | Switch to AArch64 (if `SCR_EL3.RW = 1`) |
-| 4 | Enter Non-secure World (if `SCR_EL3.NS = 1`) |
+| 1) | Jump to address in `ELR_EL3` |
+| 2) | Restore CPU state from `SPSR_EL3` |
+| 3) | Switch to AArch64 (if `SCR_EL3.RW = 1`) |
+| 4) | Enter Non-secure World (if `SCR_EL3.NS = 1`) |
 
-### 💡 Example code
+| Step | Description |
+|------|-------------|
+| 1) | Set SCR_EL3(NS,RW...) |
+| 2) | Set PSTATE(mode, interrupt mask) for next EL with SPSR_EL3 |
+| 3) | Store jump address with ELR_EL3 |
+| 4) | Jump Non-secure World with eret(if `SCR_EL3.NS = 1`) |
+
+### 💡 Example code(jumps EL3 to non-secure)
 ```asm
 MOV X0, #(1 << 0 | 1 << 10) // NS=1, RW=1 (Non-secure, AArch64)
 MSR SCR_EL3, X0
@@ -86,15 +99,16 @@ ERET // Transition!
 
 ### ❗️ Transition considerations
 
-| Risk | Description |
-|------|-------------|
-| 1 | Incorrect SCR_EL3 or SPSR_EL3 setting → transition fails |
-| 2 | Secure resource config must be complete before transition |
-| 3 | Memory/cache must be set up properly (e.g. MMU state) |
+<span style="color:blue">1) </span>Incorrect SCR_EL3 or SPSR_EL3 setting → transition fails  
+<span style="color:blue">2) </span>Secure resource config must be complete before transition  
+<span style="color:blue">3) </span>Memory/cache must be set up properly (e.g. MMU state)  
+
+
+<div style="margin:40px 0;"></div>
 
 ---
-
 ## 🔐 Security: Secure → Non-secure
+---
 
 | Concept | Secure World | Non-secure World |
 |---------|--------------|------------------|
@@ -114,15 +128,18 @@ ERET // Transition!
 
 ### 🔄 Returning to Secure World
 
-Returning is only possible using `SMC` (Secure Monitor Call):
+Returning is only possible using <span class="highlight">**`SMC` (Secure Monitor Call)**</span>:
 
 - Called from Non-secure EL1/EL2
 - Traps to EL3 (Secure Monitor handler)
 - Handler checks and processes request securely
 
----
 
+<div style="margin:40px 0;"></div>
+
+---
 ## 📦 Code-based flow (TF-A: `bl31`)
+---
 
 ### 🔹 1) Transition entry: `bl31_main()`
 
@@ -163,4 +180,3 @@ bl31_main()
  └─ el3_exit()                  // Restore context → ERET
        └─ eret                  // EL3 → EL1 or EL2
 ```
----
