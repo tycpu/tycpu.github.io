@@ -8,10 +8,10 @@ tags: [psci, tf-a, power-management, smc]
 ## ⚡ PSCI Overview: `psci_cpu_on`, `system_off`, etc.
 
 ---
-
 ### 1. What is PSCI?
+---
 
-PSCI (Power State Coordination Interface) is the official power management interface defined by ARM.
+PSCI (Power State Coordination Interface) is the official <span class="highlight">**power management interface**</span> defined by ARM.
 
 Before PSCI, each ARM SoC vendor implemented their own way to control power (e.g., turning CPUs on/off, suspend, reboot).  
 This led to **platform(kernel)-dependent kernel code** and made maintenance across devices very difficult.
@@ -23,9 +23,21 @@ In summary:
 
 > PSCI provides a **standardized way** for the OS to request power control actions via SMC to EL3.
 
----
 
+<div style="background:#f0f8ff; border-left:4px solid #007acc; padding:10px; margin:15px 0;">
+💡 <strong>Note:</strong> psci in a kind of layer that is excuted on EL3.<br>
+And this layer is used for power managing.<br>
+The real managing is operated in platform code.<br>
+Each vendors have to develop both kernel and platform same as before,<br>
+But kernel code doesn't have any dependecny to platform,<br>
+So one kernel code can be shared various types of SoC.<br>
+</div>
+
+<div style="margin:40px 0;"></div>
+
+---
 ### 2. PSCI Function Overview
+---
 
 Each PSCI function is identified by a **function ID defined by the SMCCC (SMC Calling Convention)**.  
 These functions are used to manage CPU and system power states.
@@ -74,7 +86,7 @@ Here are the major PSCI functions:
   psci_features(PSCI_CPU_ON);
   ```
 
-#### 🔸 `Common Function IDs (SMCCC)`
+#### 🔸<strong>`Common Function IDs (SMCCC)`</strong>
   ```c
   #define PSCI_CPU_ON         0x84000003
   #define PSCI_CPU_SUSPEND    0x84000001
@@ -88,9 +100,12 @@ To call them:
   arm_smccc_smc(PSCI_CPU_ON, cpu_id, entry, context, 0, 0, 0, 0, &res);
   ```
 
+<div style="margin:40px 0;"></div>
 
+---
 ### 3. PSCI Flow in TF-A
-Even though PSCI is called by the kernel (EL1), the actual logic runs in EL3 (TF-A).  
+---
+<span class="highlight">**Even though PSCI is called by the kernel (EL1), the actual logic runs in EL3 (TF-A).**</span>  
 
 🔧 Platform-Specific Implementation  
 The real power control logic is implemented by each vendor, using the plat_psci_ops structure:
@@ -117,12 +132,14 @@ Then, PSCI uses this interface:
   }
   ```
 
-🧠 Summary  
-PSCI is just a standard interface between kernel and TF-A.  
+So, **PSCI is just a standard interface between kernel and TF-A.**  
 Actual hardware-specific operations must be implemented in vendor platform code via plat_psci_ops.
 
+<div style="margin:40px 0;"></div>
 
+---
 ### 4. How the Kernel Uses PSCI
+---
 The Linux kernel uses PSCI to offload CPU and system power control to EL3.  
 #### 🔧 SMC call example in the kernel
   ```c
@@ -144,6 +161,12 @@ When the kernel boots secondary cores, it uses psci_cpu_on(), which wraps the SM
 This is completely different from plat_psci_ops, which is in EL3.  
 🔸 smp_psci_ops is used by the kernel (EL1) to call PSCI  
 🔸 plat_psci_ops is used by TF-A (EL3) to implement PSCI  
+
+<div style="background:#f0f8ff; border-left:4px solid #007acc; padding:10px; margin:15px 0;">
+💡 <strong>Note:</strong> smp_psci_ops is used to call EL3 from EL1.<br>
+and plat_psci_ops is used in PSCI layer(EL3) and call platform.<br>
+</div>
+
 
 #### 📦 Device Tree Setup
 The kernel will only use PSCI if it's defined in the device tree:
