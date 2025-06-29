@@ -7,11 +7,14 @@ tags: [linux, kernel, start_kernel, boot-sequence]
 
 ## 🔧 The Handoff: `bl start_kernel`
 
+<div style="margin:20px 0;"></div>
 
+---
 ### 🚪 enter process of start_kernel()
+---
 
 We discussed about head.S in the last post.  
-At the head.S, MMU, page table, and stack are initialized before entering <span class="highlight">__primary_switched</span>.  
+At the head.S, MMU, page table, and stack are initialized before entering <span class="highlight">**__primary_switched**</span>.  
 So we can summarize the flow about entering start_kernel() like this:
 
 ``` text 
@@ -26,14 +29,17 @@ So we can summarize the flow about entering start_kernel() like this:
       bl start_kernel
 ```
 
-<span class="highlight">__primary_switched</span> is the end point of setting for platform which is for entering C code.  
-So after __primary_switched, all of assembly initializings are done and jump to C functions.  
-The reason why this process is needed is because before __primary_switched, C code can't be executed — because  
-there are no virtual addresses, stack, page tables, and etc...  
-(all of these must be needed for executing C code)
+<span class="highlight">**__primary_switched** is the end point of setting for platform</span> which is for entering C code.  
+So after __primary_switched, all of assembly initializings are done and **can jump to C functions**.  
+The reason why this process is needed is because before __primary_switched, C code can't be executed  
+because there are no virtual addresses, stack, page tables, and etc...  
++) all of these must be needed for executing C code
 
-***
+<div style="margin:40px 0;"></div>
+
+---
 ### ⚙️ what things are executed in start_kernel()?
+---
 <span class="highlight">start_kernel()</span> is the starting point of initializing C code in linux kernel  
 and setting point of primary sub-systems like scheduler and IRQ.
 
@@ -58,7 +64,7 @@ The initialing flow at start_kernel() can be summarize like this:
   └── rest_init()            # start kerenl tasks: execute kthreadd, init
 ```
 
-And especially after <span class="highlight">rest_init()</span>, these are executed:
+And especially after <span class="highlight">**rest_init()**</span>, these are executed:
 ``` text
   rest_init()
   ├── kernel_thread(kernel_init)
@@ -68,11 +74,15 @@ And especially after <span class="highlight">rest_init()</span>, these are execu
 ```
 So at this point, kernel starts multitasking and finish to start userspace.
 
-***
+<div style="margin:40px 0;"></div>
 
+---
 ### 🧰 init process: what else does it initialize?
+---
 
 +) Major initializations performed by the init process (representative examples):
+
+
 | Init task | Example |
 |-----------|---------|
 | Root filesystem mount | rootfs, initramfs, real disk partition |
@@ -81,18 +91,22 @@ So at this point, kernel starts multitasking and finish to start userspace.
 | Load driver | via init script or systemd |
 | Start userspace service | logger, sshd, etc |
 
-***
 
+
+<div style="margin:40px 0;"></div>
+
+---
 ### 🧠 after start_kernel(): where is the start point about "kernel is executing?"
+---
 I want to discuss about:  
 <span class="highlight">If kernel is entered to start_kernel(), can I ensure the booting is done?</span>
 
 - Until `start_kernel()`, the thread is single  
 → this point is executed with a single thread, so interrupt is also off  
-→ subsystems of kernel like memory and scheduler are ready for executing at this point  
+→ subsystems of kernel like scheduler are ready for executing at this point  
 → but kernel can't be executed with multitasking, and userspace can't be operated  
 
-- At `rest_init()`, multitasking is started:
+- **At `rest_init()`, multitasking is started**:
 ``` c
   rest_init()
   {
@@ -103,10 +117,29 @@ I want to discuss about:
 ```
 → from rest_init(), kernel runs tasks with scheduler
 
-***
+``` text
+    // specific flow after cpu_startup_entry()
+    → cpu_startup_entry()
+      → while (1) // idle loop
+           if (runnable task exists)
+             schedule() → context switch
+           else
+             arch_cpu_idle()
+```
 
+<div style="background:#f0f8ff; border-left:4px solid #007acc; padding:10px; margin:15px 0;">
+💡 <strong>Note:</strong> At rest_init(), the first task is generated with kernel_thread.<br>
+And after rest_init(), cpu enters to idle loop so the multitasking(task scheduler) starts.<br>
+After enter to idle loop, cpu is available to task switching.<br>
+</div>
+
+
+<div style="margin:40px 0;"></div>
+
+---
 ### ✅ Conclusion
+---
 
 After <span class="highlight">rest_init()</span>,  
 especially finishing <span class="highlight">init process (kernel_init)</span>,  
-we can conclude this point is the **starting of kernel execution**.
+we can conclude that **this is the end point of the starting of kernel execution**.
