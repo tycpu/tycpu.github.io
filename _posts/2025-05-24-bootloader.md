@@ -6,27 +6,31 @@ tags: [u-boot, bootloader, arm64]
 ---
 
 ## 🚀 Bootloader
+---
 
 After SoC initialization and secure-world composition (BL1 → BL31),  
 the system is ready to execute the Linux kernel in the **non-secure world**.
 
 At this point, a software called **BL33** is executed.  
-This software is commonly known as the **bootloader**.
+<span class="highlight">This software is commonly known as the **bootloader**.</span>
 
 The bootloader's role is simple but critical:  
 > “Everything that must happen before the Linux kernel can start running.”
+> Bootloader initializes minimum hardwares that is used for kernel entry.
+
+<div style="margin:40px 0;"></div>
 
 ---
-
 ### 1️⃣ What Is a Bootloader?
+---
 
-We previously discussed **secure boot** in [Post 2-1](./2025-05-20-stages-bl1-bl2-bl31.html),  
+We previously discussed **secure boot** in [Post 2-1](/2025/05/20/stages-bl1-bl2-bl31.html),  
 which focused on the **secure world** and its initialization steps.
 
 Now, we shift to the **non-secure world** and explore how the Linux kernel is booted.  
 The key component in this process is the **bootloader**.
 
-A **bootloader** is a program responsible for **loading the operating system** into memory and **executing it**.  
+<span class="highlight">A **bootloader** is a program responsible for **loading the operating system** into memory and **executing it**.</span>  
 When the system gets power, the bootloader runs and initializes essential hardware,  
 preparing the environment so that the kernel can safely start.
 
@@ -36,12 +40,12 @@ On most ARM-based systems, the most commonly used bootloader is **U-Boot**.
 > because critical hardware like memory, timers, and serial ports are not yet ready.  
 > The bootloader fills this gap.
 
----
+<div style="margin:20px 0;"></div>
 
 ### 🛠️ Bootloader Responsibilities
 
-1. **Initialize hardware**  
-   - Memory (DRAM), UART, timers, etc.
+1. **Initialize hardware for kernel executing**  
+   - Console, basic clocks, UART, timers, etc.
 
 2. **Load the kernel image**  
    - Read the kernel binary (e.g., `Image`) from storage and load it into memory
@@ -61,9 +65,18 @@ On most ARM-based systems, the most commonly used bootloader is **U-Boot**.
 > 📌 **Important:** The bootloader’s job ends when the kernel starts.  
 > After that, init systems and user space processes are handled by the kernel itself.
 
----
+<div style="background:#f0f8ff; border-left:4px solid #007acc; padding:10px; margin:15px 0;">
+💡 <strong>Note:</strong> Kernel does <strong>full bring-up</strong> of hardwares.<br>
+The meaning of "Initialize hardware for kernel executing" is just minimal init for kernel booting.<br>
+Linux kernel activates all features of hardwares if there are device drivers or device trees<br>
+that are pair with each hardwares.<br>
+</div>
 
+<div style="margin:40px 0;"></div>
+
+---
 ### 2️⃣ Main Elements Passed to the Linux Kernel
+---
 
 #### 📁 1) Kernel Image
 - The bootloader loads the kernel binary into a specific memory address  
