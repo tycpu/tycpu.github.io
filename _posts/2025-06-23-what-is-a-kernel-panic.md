@@ -44,7 +44,7 @@ And the crash dump can be get with rampdump(kdump).<br>
 ## 2️⃣ Common causes of kernel panic
 ---
 
-### 1) <span style="color:blue;"> Null pointer dereference </span>
+### <span style="color:blue;"> 1) Null pointer dereference </span>
 - If kernel code refers to NULL address, **the fault is generated because of memory protection**.  
 +) basically, NULL pointer dereference is Oop, but if the address which kernel tries to access is critical,
 this action would be the reason of Panic.  
@@ -52,24 +52,24 @@ this action would be the reason of Panic.
 
 <div style="margin:20px 0;"></div>
 
-### 2) <span style="color:blue;"> Page fault in kernel mode </span>
+### <span style="color:blue;"> 2) Page fault in kernel mode </span>
 - Page fault is caused **when MMU can't find virtual address in page table**.  
 - If Kernel accessed to virtual address that dosen't be found in page table, page fault exception(Panic) is occured.  
 
 <div style="margin:20px 0;"></div>
 
-### 3) <span style="color:blue;"> BUG()/assertion failures </span>
+### <span style="color:blue;"> 3) BUG()/assertion failures </span>
 - BUG() is a kind of macro which means **the system is reached to some code that must be not accessed logically**.
 - Trigger panic directly to ensure system consistency.
 
 <div style="margin:20px 0;"></div>
 
-### 4) <span style="color:blue;"> Stack overflows </span>
+### <span style="color:blue;"> 4) Stack overflows </span>
 - Kernel stack could be overflow because of **recursion or big size local variables**.
 - The overflow might be critical because **it can pollute other memories**.
 
 <div style="margin:20px 0;"></div>
 
-### 5) <span style="color:blue;"> Kernel modules misbehavior </span>
+### <span style="color:blue;"> 5) Kernel modules misbehavior </span>
 - If there are some **uncompatible modules or some drivers with bugs** in system.
 - Panic could be caused with invalid memory access, and symbol resolution error.
