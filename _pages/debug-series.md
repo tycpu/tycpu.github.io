@@ -18,10 +18,6 @@ permalink: /debug-series/
 
 - [Breaking Down Call Traces for Debugging](/2025/06/25/how-to-read-a-call-trace.html)
 
-## 4. 🧠 Typical Root Causes of Kernel Panics
-
-- [Analyzing Typical Root Causes of Panics](/2025/06/26/typical-root-causes-of-kernel-panics.html)
-
-## 5. 🛠️ Practical Debugging Tips
+## 4. 🛠️ Practical Debugging Tips
 
 - [Real-World Kernel Debugging Techniques](/2025/06/27/practical-debugging-tips-for-real-systems.html)
