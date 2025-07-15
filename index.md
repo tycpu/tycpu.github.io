@@ -23,10 +23,7 @@ and prepare for future opportunities in international tech environments.
 
 - [1️⃣ Boot to Life: Understanding Linux Kernel Boot](/boot-series/)
 - [2️⃣ Surviving Panic: Debugging Kernel Crashes & Call Traces](/debug-series/)
-- [3️⃣ Device Tree & Driver Binding: When the Hardware Disappears](/bringup-series/)
-- [4️⃣ Trace Everything: Kernel Tracing Tools for Performance Debugging](/trace-series/)
-- [5️⃣ DVFS in Practice: cpufreq driver & governor Design](/cpufreq-series/)
-- [6️⃣ Task Scheduling & CPU Affinity: How the Kernel Thinks](/scheduler-series/)
+- [3️⃣ Building Blocks of the Linux Kernel: Core Structures, Contexts, and Mechanisms](/structure-series/)
 
 
 ## 📌 Notes
